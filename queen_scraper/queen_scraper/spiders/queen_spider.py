@@ -1,0 +1,30 @@
+import scrapy
+
+class QueenSpider(scrapy.Spider):
+    name = 'queen'
+    start_urls = ['http://tvepisodes.queentorrent.net/',]
+##    def start_requests(self):
+##        urls = [
+##            'http://tvepisodes.queentorrent.net/',
+##        ]
+##        for url in urls:
+##            yield scrapy.Request(url=url, callback=self.parse)
+
+    #response.css('span a[title]::attr(href)')
+##    def parse(self, response):
+##        if response.css(".search_top_title::text").extract_first() != None:
+##            yield {
+##                    'title' : response.css(".search_top_title::text").extract_first(),
+##                }
+                
+    def parse(self, response):
+##        page = response.url
+##        filename = 'queen.html'
+##        with open(filename, 'wb') as f:
+##            f.write(response.body)
+##        self.log('Saved file %s' % filename)  
+        for title in response.css("span a[title]"):
+            if title != None:
+                yield {
+                   'title': title.css("::text").extract_first(),
+                }      
